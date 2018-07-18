@@ -1,0 +1,21 @@
+﻿CREATE TABLE tipos_pessoa(
+id INTEGER,
+descricao VARCHAR NOT NULL,
+CONSTRAINT tipos_pessoa_pkey PRIMARY KEY (id));
+
+CREATE TABLE pessoas(
+nome VARCHAR NOT NULL,
+telefone VARCHAR NOT NULL,
+email VARCHAR,
+tipo_id INTEGER,
+CONSTRAINT pessoas_fkey FOREIGN KEY (tipo_id) REFERENCES tipos_pessoa (id),
+CONSTRAINT tel_check CHECK (telefone ~ '^((\(\d{2}\))(\d{3}\.){2}\d{3})|((\([0-9]{2}\))(\d{4}\.)\d{4})$');
+
+--Omitindo campos que receberão inserções, pois todos os campos serão preenchidos
+INSERT INTO tipos_pessoa VALUES (1, 'Física');
+INSERT INTO tipos_pessoa VALUES (2, 'Jurídica');
+
+INSERT INTO pessoas VALUES ('Francisco', '(85)123.456.789', 'francisco@gmail.com', 1);
+INSERT INTO pessoas VALUES ('João', '(85)1234.5678', 'joao@gmail.com', 1);
+INSERT INTO pessoas VALUES ('Pizzaria do João', '(85)123.456.789', 'contato@pizzariadojoao.com', 2);
+
